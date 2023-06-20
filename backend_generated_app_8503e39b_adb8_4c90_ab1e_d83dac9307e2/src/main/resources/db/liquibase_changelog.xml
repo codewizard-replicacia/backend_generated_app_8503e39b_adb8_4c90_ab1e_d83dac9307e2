@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <property name="schemaName" value="generated_app"></property>
+    <property name="author=" value="db-designer"></property>
+    <changeSet id="v1-01-01" author="${author}">
+    
+ <createTable schemaName="${schemaName}" tableName="Reminder">
+	<column name="Reminder_id" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="Reminder_date" type="DATE" />
+    
+     <column name="Notified" type="BOOLEAN" />
+    
+     <column name="Petname" type="VARCHAR(250)" />
+    
+     <column name="Species" type="VARCHAR(250)" />
+    
+     <column name="Notes" type="VARCHAR(250)" />
+    
+     <column name="Contact_number" type="VARCHAR(250)" />
+    
+     <column name="Owner_name" type="VARCHAR(250)" />
+    
+     <column name="Sms" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="Vet_Visit_History">
+	<column name="Vet_visit_history_id" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="Visit_date" type="DATE" />
+    
+     <column name="Petname" type="VARCHAR(250)" />
+    
+     <column name="Visit_reason" type="VARCHAR(250)" />
+    
+     <column name="VeterinarianName" type="VARCHAR(250)" />
+    
+     <column name="Vet_notes" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="Pet_Info">
+	<column name="Pet_info_id" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="Petname" type="VARCHAR(250)" />
+    
+     <column name="Species" type="VARCHAR(250)" />
+    
+     <column name="Photo_file" type="VARCHAR(250)" />
+    
+     <column name="Breed" type="VARCHAR(250)" />
+    
+     <column name="Age" type="SERIAL" />
+    
+     <column name="Sex" type="VARCHAR(250)" />
+    
+     <column name="Spayed_or_neutered" type="VARCHAR(250)" />
+    
+     <column name="Owner_name" type="VARCHAR(250)" />
+    
+     <column name="Phone_number" type="VARCHAR(250)" />
+    
+     <column name="Email" type="VARCHAR(250)" />
+    
+     <column name="Address" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+	
+  <createTable schemaName="${schemaName}" tableName="Pet_InfoPet_vet_visit_history">
+	<column name="Id" type="SERIAL" autoIncrement="true">
+		<constraints primaryKey="true" nullable="false"/>
+	</column>
+	<column name="Pet_info_id" type="SERIAL" />
+	<column name="Vet_visit_history_id" type="SERIAL" />
+</createTable>
+
+ 	<addForeignKeyConstraint baseTableName="Pet_InfoPet_vet_visit_history" baseTableSchemaName="${schemaName}"  baseColumnNames="Pet_info_id" constraintName="Vet_Visit_History_Pet_info_id_fk"
+	                                  referencedTableName="Pet_Info" referencedTableSchemaName="${schemaName}" referencedColumnNames="Pet_info_id"/>
+	                                  
+	<addForeignKeyConstraint baseTableName="Pet_InfoPet_vet_visit_history" baseTableSchemaName="${schemaName}"  baseColumnNames="Vet_visit_history_id" constraintName="Vet_Visit_History_Vet_visit_history_id_fk"
+	                                  referencedTableName="Vet_Visit_History" referencedTableSchemaName="${schemaName}" referencedColumnNames="Vet_visit_history_id"/>
+ 
+	
+ 
+ 
+ 	<addColumn tableName="Pet_Info" schemaName="${schemaName}">
+	    <column name="Pet_InfoPet_info_reminder" type="SERIAL"/>
+	</addColumn>
+	<addForeignKeyConstraint baseTableName="Pet_Info" baseColumnNames="Pet_InfoPet_info_reminder" baseTableSchemaName="${schemaName}" constraintName="Pet_Info_Pet_info_reminder_fk" referencedTableName="Reminder"
+	                                 referencedColumnNames="Reminder_id" referencedTableSchemaName="${schemaName}"/>
+ 
+
+	    </changeSet>
+</databaseChangeLog>
